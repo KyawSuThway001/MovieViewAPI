@@ -144,7 +144,7 @@ def actor_search():
         'language': 'en-US',
         'page': '1'
     }
-    actor_search_respond = requests.get(url=actor_search_url, params=QUERY)
+    actor_search_respond = requests.get(url=actor_search_url, params=query)
     data = actor_search_respond.json()['results']
     return render_template('search_actor.html', data=data, image_path=img_url)
 
