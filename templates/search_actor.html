@@ -1,0 +1,60 @@
+{% include "header.html" %} {# header.html should only contain navbar markup (no <html>/<head>) #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Popular Actors - Movie Website</title>
+
+  <!-- CSS + JS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=4">
+  <script src="{{ url_for('static', filename='script.js') }}?v=4" defer></script>
+</head>
+<body>
+
+<div class="container">
+
+
+  <!-- Actor Section -->
+  <section class="movie-section">
+    <h2>Popular Actors</h2>
+
+    <div class="scroll-container">
+      <button class="scroll-btn scroll-left" data-target="actors-row">&#8249;</button>
+
+      <div class="movie-row actors-row">
+        {% for m in data %}
+        <div class="actor-card">
+          <a href="{{ url_for('actor_detail', actor_id=m.id) }}" class="movie-link">
+            <img src="{{ image_path }}{{ m.profile_path }}" alt="{{ m.name }}">
+            <div class="movie-info">
+              <h3>{{ m.name }}</h3>
+              <span>Popularity: {{ m.popularity }}</span>
+            </div>
+          </a>
+
+          <div class="known-for">
+            <h4>Known For</h4>
+            <div class="known-for-list">
+              {% for i in m.known_for %}
+              <a href="{{ url_for('search_movie_detail', m_id=i.id) }}" class="known-for-item">
+                <img src="{{ image_path }}{{ i.backdrop_path }}" alt="{{ i.title }}">
+                <div class="kf-text">
+                  <h5>{{ i.title }}</h5>
+                  <p>{{ i.overview | truncate(100) }}</p>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <button class="scroll-btn scroll-right" data-target="actors-row">&#8250;</button>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>

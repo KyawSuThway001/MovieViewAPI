@@ -1,0 +1,52 @@
+{% include "header.html" %} {# header.html should only contain navbar markup (no <html>/<head>) #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Website</title>
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+  <!-- Search -->
+<!--  <div class="search-container">-->
+<!--    <form action="{{ url_for('search') }}" method="POST" style="display:flex;width:100%;">-->
+<!--      <input type="text" name="search_data" placeholder="Search for movies..." required>-->
+<!--      <button type="submit">Search</button>-->
+<!--    </form>-->
+<!--  </div>-->
+
+  {% macro movie_section(title, target, movie_list) %}
+<section class="movie-section">
+  <h2>{{ title }}</h2>
+  <div class="scroll-container">
+    <button class="scroll-btn scroll-left" data-target="{{ target }}">‹</button>
+    <div class="movie-row {{ target }}">
+      {% for m in movie_list %}
+      <a href="{{ url_for('search_movie_detail', m_id=m.id) }}" class="movie-link">
+        <div class="movie-card">
+          <img src="{{ photo_path }}{{ m['poster_path'] }}" alt="{{ m.title }}">
+          <div class="movie-info">
+            <h3>{{ m.title }}</h3>
+            <span>Popularity: {{ m.popularity }}</span>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <button class="scroll-btn scroll-right" data-target="{{ target }}">›</button>
+  </div>
+</section>
+{% endmacro %}
+<!--macro is used for re-using template, Declare macro above and assign value following-->
+  {{ movie_section("Now Playing", "playing", series_one) }}
+  {{ movie_section("Popular", "popular", series_two) }}
+  {{ movie_section("Upcoming", "upcoming", series_three) }}
+  {{ movie_section("Top Rate", "top_rate", series_four) }}
+  {{ movie_section("recommendation", "coming", series_five) }}
+  
+
+  <script src="static/script.js"></script>
+</body>
+</html>

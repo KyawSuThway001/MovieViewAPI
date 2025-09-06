@@ -1,0 +1,60 @@
+{% include "header.html" %} {# header.html should only contain navbar markup (no <html>/<head>) #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Popular Actors - Movie Website</title>
+
+  <!-- Google font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar&display=swap" rel="stylesheet">
+
+  <!-- site CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=5">
+  <script src="{{ url_for('static', filename='script.js') }}?v=5" defer></script>
+</head>
+<body>
+
+  <!-- Search Bar -->
+   <div class="search-container">
+    <form action="{{ url_for('actor_search') }}" method="POST" style="display:flex;width:100%;">
+      <input type="text" name="search_data" placeholder="Search for Actor..." required>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+
+  <!-- Actors Section -->
+
+    {% macro actor_section(target, actor_list) %}
+  <section class="movie-section">
+ <h2>Popular Actors</h2>
+
+    <div class="scroll-container">
+      <button class="scroll-btn scroll-left" data-target="{{target}}">&#8249;</button>
+
+      <div class="movie-row actors-row">
+        {% for m in actor_list %}
+        <a href="{{ url_for('actor_detail', actor_id=m.id) }}" class="movie-link">
+          <div class="movie-card">
+            <img src="{{ image_path }}{{ m.profile_path }}" alt="{{ m.name }}">
+            <div class="movie-info">
+              <h3>{{ m.name }}</h3>
+              <span>Popularity: {{ m.popularity }}</span>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+
+      <button class="scroll-btn scroll-right" data-target="{{target}}">&#8250;</button>
+    </div>
+    {% endmacro %}
+    {{ actor_section( "actor_one", actor_one) }}
+    {{ actor_section( "actor_two", actor_two) }}
+    {{ actor_section( "actor_three", actor_three) }}
+    {{ actor_section( "actor_four", actor_four) }}
+    {{ actor_section( "actor_five", actor_five) }}
+
+</body>
+</html>

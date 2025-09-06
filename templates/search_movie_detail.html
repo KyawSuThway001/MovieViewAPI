@@ -1,0 +1,52 @@
+<!--{% include "header.html" %} {# make sure header.html does NOT contain <html> or <head> tags #}-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ all_data['title'] }} – Details</title>
+
+  <!-- Correct static paths -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=2">
+  <script src="{{ url_for('static', filename='script.js') }}?v=2" defer></script>
+</head>
+<body>
+
+  <nav>
+      <h1>🎬 Movies</h1>
+      <ul>
+        <li><a href="/#">Movie</a></li>
+        <li><a href="#">Actor</a></li>
+        <li><a href="#">Music</a></li>
+  <!--      <li><a href="#">Upcoming</a></li>-->
+      </ul>
+  </nav>
+
+  <!-- optional: if your header.html only has a nav, leave it above -->
+  <section class="movie-section">
+    <div class="detail-wrapper">
+      <div class="detail-poster">
+        <img src="{{ image }}{{ all_data['poster_path'] }}" alt="{{ all_data['title'] }} poster">
+      </div>
+
+      <div class="detail-body">
+        <h1 class="detail-title">{{ all_data['title'] }}</h1>
+
+        <ul class="detail-meta">
+          <li><strong>Rating:</strong> 8.5/10</li>
+          <li><strong>Popularity:</strong> {{ all_data['popularity'] }}</li>
+          <li><strong>Release:</strong> {{ all_data['release_date'] }}</li>
+        </ul>
+
+        <p class="detail-overview">{{ all_data['overview'] }}</p>
+
+        <div class="detail-actions">
+          <a href="{{ y_path }}{{ y_url }}" class="btn btn-primary">▶ Watch Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
